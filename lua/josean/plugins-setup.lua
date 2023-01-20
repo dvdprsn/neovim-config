@@ -10,7 +10,6 @@ local ensure_packer = function()
   return false
 end
 local packer_bootstrap = ensure_packer() -- true if packer was just installed
-
 -- autocommand that reloads neovim and installs/updates/removes plugins
 -- when file is saved
 vim.cmd([[ 
@@ -29,6 +28,8 @@ end
 -- add list of plugins to install
 return packer.startup(function(use)
   -- packer can manage itself
+  use("akinsho/toggleterm.nvim")
+
   use("wbthomason/packer.nvim")
 
   use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
@@ -76,7 +77,13 @@ return packer.startup(function(use)
   -- configuring lsp servers
   use("neovim/nvim-lspconfig") -- easily configure language servers
   use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
-  use({ "glepnir/lspsaga.nvim", branch = "main" }) -- enhanced lsp uis
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      require("lspsaga").setup({})
+    end,
+  }) -- enhanced lsp uis
   use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
   use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 

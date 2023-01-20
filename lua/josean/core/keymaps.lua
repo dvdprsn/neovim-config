@@ -2,11 +2,12 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for conciseness
-
+keymap.set("n", "<Enter>", "o<ESC>")
 ---------------------
 -- General Keymaps
 ---------------------
-
+-- Toggle Term
+keymap.set("n", "<leader>g", ":lua _LAZYGIT_TOGGLE()<CR>")
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
 
