@@ -30,6 +30,8 @@ return packer.startup(function(use)
   -- packer can manage itself
   use("akinsho/toggleterm.nvim")
 
+  use("ray-x/lsp_signature.nvim")
+
   use("wbthomason/packer.nvim")
 
   use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
