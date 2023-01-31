@@ -85,6 +85,7 @@ mason_lspconfig.setup_handlers({
 		})
 	end,
 })
+
 mason_null_ls.setup_handlers({
 	function(source_name, methods)
 		require("mason-null-ls.automatic_setup")(source_name, methods)

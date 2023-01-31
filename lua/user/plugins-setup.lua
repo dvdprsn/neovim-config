@@ -14,8 +14,8 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 -- when file is saved
 vim.cmd([[ 
   augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
+  autocmd!
+  autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
   augroup end
 ]])
 
@@ -30,6 +30,7 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
+	use("nvim-tree/nvim-web-devicons")
 	--Colour scheme
 	use("EdenEast/nightfox.nvim")
 	use("ray-x/lsp_signature.nvim")
@@ -75,7 +76,7 @@ return packer.startup(function(use)
 		config = function()
 			require("lspsaga").setup({})
 		end,
-	}) -- enha
+	})
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 	use("windwp/nvim-autopairs")
@@ -85,6 +86,18 @@ return packer.startup(function(use)
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	--dashboard
+	use({
+		"glepnir/dashboard-nvim",
+		event = "VimEnter",
+		config = function()
+			require("dashboard").setup({
+
+				--config
+			})
+		end,
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 	if packer_bootstrap then
 		require("packer").sync()
 	end
