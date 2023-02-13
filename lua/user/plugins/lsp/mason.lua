@@ -86,8 +86,33 @@ mason_lspconfig.setup_handlers({
 	end,
 })
 
+local setup, null_ls = pcall(require, "null-ls")
+if not setup then
+	return
+end
 mason_null_ls.setup_handlers({
 	function(source_name, methods)
 		require("mason-null-ls.automatic_setup")(source_name, methods)
+	end,
+	-- Add new configurations here!
+	autopep8 = function(source_name, methods)
+		null_ls.register(null_ls.builtins.formatting.autopep8.with({ extra_args = { "--max-line-length", "240" } }))
+	end,
+})
+
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+null_ls.setup({
+	-- configure format on save
+	on_attach = function(current_client, bufnr)
+		if current_client.supports_method("textDocument/formatting") then
+			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.format()
+				end,
+			})
+		end
 	end,
 })
