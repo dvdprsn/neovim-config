@@ -90,16 +90,20 @@ local setup, null_ls = pcall(require, "null-ls")
 if not setup then
 	return
 end
-mason_null_ls.setup_handlers({
-	function(source_name, methods)
-		require("mason-null-ls.automatic_setup")(source_name, methods)
-	end,
-	-- Add new configurations here!
-	autopep8 = function(source_name, methods)
-		null_ls.register(null_ls.builtins.formatting.autopep8.with({ extra_args = { "--max-line-length", "240" } }))
-	end,
-})
 
+-- mason_null_ls.setup_handlers({
+-- 	function(source_name, methods)
+-- 		require("mason-null-ls.automatic_setup")(source_name, methods)
+-- 	end,
+-- 	-- Add new configurations here!
+-- 	autopep8 = function(source_name, methods)
+-- 		null_ls.register(null_ls.builtins.formatting.autopep8.with({ extra_args = { "--max-line-length", "240" } }))
+-- 	end,
+-- })
+
+require("mason-null-ls").setup({
+    handlers = {},
+})
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	-- configure format on save
