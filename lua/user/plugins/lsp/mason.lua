@@ -1,4 +1,28 @@
 -- import lspconfig plugin safely
+-- import mason plugin safely
+
+local mason_status, mason = pcall(require, "mason")
+if not mason_status then
+    return
+end
+
+-- import mason-lspconfig plugin safely
+local mason_lspconfig_status, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not mason_lspconfig_status then
+    return
+end
+
+-- import mason-null-ls plugin safely
+local mason_null_ls_status, mason_null_ls = pcall(require, "mason-null-ls")
+if not mason_null_ls_status then
+    return
+end
+
+local setup, null_ls = pcall(require, "null-ls")
+if not setup then
+    return
+end
+
 local lspconfig_status, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status then
     return
@@ -54,30 +78,6 @@ local signs = { Error = " ", Warn = " ", Hint = "󰔉 ", Info = " " }
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
--- import mason plugin safely
-
-local mason_status, mason = pcall(require, "mason")
-if not mason_status then
-    return
-end
-
--- import mason-lspconfig plugin safely
-local mason_lspconfig_status, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not mason_lspconfig_status then
-    return
-end
-
--- import mason-null-ls plugin safely
-local mason_null_ls_status, mason_null_ls = pcall(require, "mason-null-ls")
-if not mason_null_ls_status then
-    return
-end
-
-local setup, null_ls = pcall(require, "null-ls")
-if not setup then
-    return
 end
 
 mason.setup()
